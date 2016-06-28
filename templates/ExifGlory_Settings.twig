@@ -1,0 +1,26 @@
+{#
+/**
+ * Exif Glory plugin for Craft CMS
+ *
+ * Exif Glory Settings.twig
+ *
+ * @author    Vadim Goncharov
+ * @copyright Copyright (c) 2016 Vadim Goncharov
+ * @link      http://photocollections.io
+ * @package   ExifGlory
+ * @since     0.0.1
+ */
+#}
+
+{% import "_includes/forms" as forms %}
+
+{% includeCssResource "exifglory/css/ExifGlory_Style.css" %}
+{% includeJsResource "exifglory/js/ExifGlory_Script.js" %}
+
+{{ forms.textField({
+    label: 'Some Setting',
+    instructions: 'Enter some setting here.',
+    id: 'someSetting',
+    name: 'someSetting', 
+    value: settings['someSetting']})
+}}
