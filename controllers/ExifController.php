@@ -1,19 +1,19 @@
 <?php
 /**
- * Exif Glory plugin for Craft CMS
+ * Exif plugin for Craft CMS
  *
- * ExifGlory Controller
+ * Exif Controller
  *
  * @author    Vadim Goncharov
  * @copyright Copyright (c) 2016 Vadim Goncharov
- * @link      http://photocollections.io
- * @package   ExifGlory
+ * @link      http://roundhouseagency.com
+ * @package   Exif
  * @since     0.0.1
  */
 
 namespace Craft;
 
-class ExifGloryController extends BaseController
+class ExifController extends BaseController
 {
 
     /**

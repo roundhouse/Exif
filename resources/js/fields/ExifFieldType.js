@@ -1,18 +1,18 @@
 /**
- * Exif Glory plugin for Craft CMS
+ * Exif plugin for Craft CMS
  *
- * ExifGloryFieldType JS
+ * ExifFieldType JS
  *
  * @author    Vadim Goncharov
  * @copyright Copyright (c) 2016 Vadim Goncharov
- * @link      http://photocollections.io
- * @package   ExifGlory
+ * @link      http://roundhouseagency.com
+ * @package   Exif
  * @since     0.0.1
  */
 
  ;(function ( $, window, document, undefined ) {
 
-    var pluginName = "ExifGloryFieldType",
+    var pluginName = "ExifFieldType",
         defaults = {
         };
 

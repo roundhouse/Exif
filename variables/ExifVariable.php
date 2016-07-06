@@ -2,7 +2,7 @@
 /**
  * Exif plugin for Craft CMS
  *
- * Exif Translation
+ * Exif Variable
  *
  * @author    Vadim Goncharov
  * @copyright Copyright (c) 2016 Vadim Goncharov
@@ -11,6 +11,12 @@
  * @since     0.0.1
  */
 
-return array(
-  'Translate me' => 'To this',
-);
+namespace Craft;
+
+class ExifVariable
+{
+  public function exampleVariable($optional = null)
+  {
+    return "And away we go to the Twig template...";
+  }
+}

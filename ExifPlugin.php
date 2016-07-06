@@ -1,19 +1,19 @@
 <?php
 /**
- * Exif Glory plugin for Craft CMS
+ * Exif plugin for Craft CMS
  *
  * Plugin to store exif data with every saved asset
  *
  * @author    Vadim Goncharov
  * @copyright Copyright (c) 2016 Vadim Goncharov
- * @link      http://photocollections.io
- * @package   ExifGlory
+ * @link      http://roundhouseagency.com
+ * @package   Exif
  * @since     0.0.1
  */
 
 namespace Craft;
 
-class ExifGloryPlugin extends BasePlugin
+class ExifPlugin extends BasePlugin
 {
   /**
    * @return mixed
@@ -24,34 +24,24 @@ class ExifGloryPlugin extends BasePlugin
 
     craft()->on('elements.onBeforeSaveElement', function(Event $event) {
       $element = $event->params['element'];
-      $exifData = craft()->images->getExifData($element['url']);
-      $element->getContent()->setAttribute('exifData', $exifData);
-      // print_r($element);
+      $isNewElement = $event->params['isNewElement'];
+      $elementType = $element['elementType'];
 
+      if ($elementType == 'Asset') {
+        if (!$element['exifData']) {
+          $exifData = craft()->images->getExifData($element->getUrl());
+          $exifData['cameraMake'] = $exifData['ifd0.Make'];
+          $exifData['cameraModel'] = $exifData['ifd0.Model'];
+          $exifData['iso'] = $exifData['exif.ISOSpeedRatings'];
+          $exifData['focalLength'] = $exifData['exif.FocalLength'];
+          $exifData['aperture'] = $exifData['exif.FNumber'];
+          $exifData['shutterSpeed'] = $exifData['exif.ExposureTime'];
+          $exifData['dateTaken'] = $exifData['exif.DateTimeOriginal'];
+          $element->getContent()->setAttribute('exifData', $exifData);
+        }
+      }
     });
 
-    // craft()->on('assets.onSaveAsset', function(Event $event) {
-    // craft()->on('assets.onBeforeUploadAsset', function(Event $event) { #### TRY TO USE THIS to prevent requests
-    craft()->on('assets.onBeforeSaveAsset', function(Event $event) {
-      $asset = $event->params['asset'];
-      $exifData = craft()->images->getExifData($asset['url']);
-      $asset->getContent()->setAttribute('exifData', $exifData);
-      // var_dump($exifData);
-
-      // var_dump($asset);
-      // $exifData = exif_read_data($asset['url'], NULL, true, true);
-      // $content = $asset->getContent();
-      // $content['exifData'] = $exifData;
-      // $asset->setContentFromPost($content);
-      // var_dump($asset);
-      // craft()->elements->saveElement($asset);
-
-      // var_dump($asset->getContent());
-      // var_dump($asset['url']);
-      // $exifData = exif_read_data($params['path'], NULL, true, true);
-      // array_push($params, $exifData);
-      // var_dump($event->params->getAttributes);
-    });
   }
 
   /**
@@ -59,7 +49,7 @@ class ExifGloryPlugin extends BasePlugin
    */
   public function getName()
   {
-    return Craft::t('Exif Glory');
+    return Craft::t('Exif');
   }
 
   /**
@@ -75,7 +65,7 @@ class ExifGloryPlugin extends BasePlugin
    */
   public function getDocumentationUrl()
   {
-    return 'https://github.com/owldesign/exifglory/blob/master/README.md';
+    return 'https://github.com/roundhouse/Exif/blob/master/README.md';
   }
 
   /**
@@ -83,7 +73,7 @@ class ExifGloryPlugin extends BasePlugin
    */
   public function getReleaseFeedUrl()
   {
-    return 'https://raw.githubusercontent.com/owldesign/exifglory/master/releases.json';
+    return 'https://raw.githubusercontent.com/roundhouse/Exif/master/releases.json';
   }
 
   /**
@@ -115,7 +105,7 @@ class ExifGloryPlugin extends BasePlugin
    */
   public function getDeveloperUrl()
   {
-    return 'http://photocollections.io';
+    return 'http://roundhouseagency.com';
   }
 
   /**
@@ -165,7 +155,7 @@ class ExifGloryPlugin extends BasePlugin
    */
   public function getSettingsHtml()
   {
-   return craft()->templates->render('exifglory/ExifGlory_Settings', array(
+   return craft()->templates->render('exif/ExifSettings', array(
      'settings' => $this->getSettings()
    ));
   }
@@ -180,6 +170,13 @@ class ExifGloryPlugin extends BasePlugin
     // Modify $settings here...
 
     return $settings;
+  }
+
+
+  public function addTwigExtension()
+  {
+    Craft::import('plugins.exif.twigextensions.ExifTwigExtension');
+    return new ExifTwigExtension();
   }
 
 }

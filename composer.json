@@ -1,11 +1,11 @@
 {
-	"name": "owldesign/exifglory'",
+	"name": "owldesign/exif'",
 	"description": "Plugin to store exif data with every saved asset",
 	"type": "craft-plugin",
 	"authors": [
 		{
 			"name": "Vadim Goncharov",
-			"homepage": "http://photocollections.io"
+			"homepage": "http://roundhouseagency.com"
 		}
 	],
 	"require": {

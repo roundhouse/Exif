@@ -1,26 +1,26 @@
 <?php
 /**
- * Exif Glory plugin for Craft CMS
+ * Exif plugin for Craft CMS
  *
- * ExifGlory FieldType
+ * Exif FieldType
  *
  * @author    Vadim Goncharov
  * @copyright Copyright (c) 2016 Vadim Goncharov
- * @link      http://photocollections.io
- * @package   ExifGlory
+ * @link      http://roundhouseagency.com
+ * @package   Exif
  * @since     0.0.1
  */
 
 namespace Craft;
 
-class ExifGloryFieldType extends BaseFieldType
+class ExifFieldType extends BaseFieldType
 {
   /**
    * @return mixed
    */
   public function getName()
   {
-    return Craft::t('ExifGlory');
+    return Craft::t('Exif');
   }
 
   /**
@@ -39,14 +39,14 @@ class ExifGloryFieldType extends BaseFieldType
   public function getInputHtml($name, $value)
   {
     if (!$value)
-      $value = new ExifGloryModel();
+      $value = new ExifModel();
 
     $id = craft()->templates->formatInputId($name);
     $namespacedId = craft()->templates->namespaceInputId($id);
 
 
-    craft()->templates->includeCssResource('exifglory/css/fields/ExifGloryFieldType.css');
-    craft()->templates->includeJsResource('exifglory/js/fields/ExifGloryFieldType.js');
+    craft()->templates->includeCssResource('exif/css/fields/ExifFieldType.css');
+    craft()->templates->includeJsResource('exif/js/fields/ExifFieldType.js');
 
     $jsonVars = array(
       'id' => $id,
@@ -56,7 +56,7 @@ class ExifGloryFieldType extends BaseFieldType
     );
 
     $jsonVars = json_encode($jsonVars);
-    craft()->templates->includeJs("$('#{$namespacedId}').ExifGloryFieldType(" . $jsonVars . ");");
+    craft()->templates->includeJs("$('#{$namespacedId}').ExifFieldType(" . $jsonVars . ");");
 
     $variables = array(
       'id' => $id,
@@ -67,7 +67,7 @@ class ExifGloryFieldType extends BaseFieldType
       // 'elementId' => $this->element->id,
     );
 
-    return craft()->templates->render('exifglory/fields/ExifGloryFieldType.twig', $variables);
+    return craft()->templates->render('exif/fields/ExifFieldType.twig', $variables);
   }
 
   /**
