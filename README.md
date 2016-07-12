@@ -57,7 +57,8 @@ In your front-end template you can use EXIF in two ways:
 
 1. `{{ asset.photoExif['cameraMake'] is defined ? 'Camera Make: ' ~ asset.photoExif['cameraMake'] : 'n/a' }}`
 
-2. ```
+2.
+```
 {% if asset.photoExif['cameraMake'] %}
 Camera Make: asset.photoExif['cameraMake']
 {% endif %}
