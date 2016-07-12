@@ -15,9 +15,7 @@ namespace Craft;
 
 class ExifPlugin extends BasePlugin
 {
-  /**
-   * @return mixed
-   */
+
   public function init()
   {
     parent::init();
@@ -27,151 +25,92 @@ class ExifPlugin extends BasePlugin
       $isNewElement = $event->params['isNewElement'];
       $elementType = $element['elementType'];
 
+      $settings = craft()->plugins->getPlugin('exif')->getSettings();
+
       if ($elementType == 'Asset') {
-        if (!$element['exifData']) {
+        if (!$element[$settings->exifField]) {
           $exifData = craft()->images->getExifData($element->getUrl());
+          // IFD0
           $exifData['cameraMake'] = $exifData['ifd0.Make'];
           $exifData['cameraModel'] = $exifData['ifd0.Model'];
+          $exifData['editSoftware'] = $exifData['ifd0.Software'];
+          $exifData['editDate'] = $exifData['ifd0.DateTime'];
+
+          // EXIF
+          $exifData['shutterSpeed'] = $exifData['exif.ExposureTime'];
+          $exifData['aperture'] = $exifData['exif.FNumber'];
           $exifData['iso'] = $exifData['exif.ISOSpeedRatings'];
           $exifData['focalLength'] = $exifData['exif.FocalLength'];
-          $exifData['aperture'] = $exifData['exif.FNumber'];
-          $exifData['shutterSpeed'] = $exifData['exif.ExposureTime'];
           $exifData['dateTaken'] = $exifData['exif.DateTimeOriginal'];
-          $element->getContent()->setAttribute('exifData', $exifData);
+          $exifData['meteringMode'] = $exifData['exif.MeteringMode'];
+          $exifData['lightSource'] = $exifData['exif.LightSource'];
+          $exifData['flash'] = $exifData['exif.Flash'];
+          $exifData['exposureMode'] = $exifData['exif.ExposureMode'];
+          $exifData['whiteBalance'] = $exifData['exif.WhiteBalance'];
+          $exifData['digitalZoomRatio'] = $exifData['exif.DigitalZoomRatio'];
+          $exifData['sceneCaptureType'] = $exifData['exif.SceneCaptureType'];
+          $exifData['contrast'] = $exifData['exif.Contrast'];
+          $exifData['saturation'] = $exifData['exif.Saturation'];
+          $exifData['sharpness'] = $exifData['exif.Sharpness'];
+          $exifData['subjectDistanceRange'] = $exifData['exif.SubjectDistanceRange'];
+          $element->getContent()->setAttribute($settings->exifField, $exifData);
         }
       }
     });
 
   }
 
-  /**
-   * @return mixed
-   */
   public function getName()
   {
     return Craft::t('Exif');
   }
 
-  /**
-   * @return mixed
-   */
   public function getDescription()
   {
     return Craft::t('Plugin to store exif data with every saved asset');
   }
 
-  /**
-   * @return string
-   */
   public function getDocumentationUrl()
   {
     return 'https://github.com/roundhouse/Exif/blob/master/README.md';
   }
 
-  /**
-   * @return string
-   */
   public function getReleaseFeedUrl()
   {
     return 'https://raw.githubusercontent.com/roundhouse/Exif/master/releases.json';
   }
 
-  /**
-   * @return string
-   */
   public function getVersion()
   {
     return '0.0.1';
   }
 
-  /**
-   * @return string
-   */
   public function getSchemaVersion()
   {
     return '0.0.1';
   }
 
-  /**
-   * @return string
-   */
   public function getDeveloper()
   {
     return 'Vadim Goncharov';
   }
 
-  /**
-   * @return string
-   */
   public function getDeveloperUrl()
   {
     return 'http://roundhouseagency.com';
   }
 
-  /**
-   * @return bool
-   */
   public function hasCpSection()
   {
     return false;
   }
 
-  /**
-   */
-  public function onBeforeInstall()
-  {
-  }
-
-  /**
-   */
-  public function onAfterInstall()
-  {
-  }
-
-  /**
-   */
-  public function onBeforeUninstall()
-  {
-  }
-
-  /**
-   */
-  public function onAfterUninstall()
-  {
-  }
-
-  /**
-   * @return array
-   */
   protected function defineSettings()
   {
     return array(
-      'someSetting' => array(AttributeType::String, 'label' => 'Some Setting', 'default' => ''),
+      'exifField' => AttributeType::String
     );
   }
-
-  /**
-   * @return mixed
-   */
-  public function getSettingsHtml()
-  {
-   return craft()->templates->render('exif/ExifSettings', array(
-     'settings' => $this->getSettings()
-   ));
-  }
-
-  /**
-   * @param mixed $settings  The Widget's settings
-   *
-   * @return mixed
-   */
-  public function prepSettings($settings)
-  {
-    // Modify $settings here...
-
-    return $settings;
-  }
-
 
   public function addTwigExtension()
   {

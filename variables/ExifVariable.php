@@ -15,8 +15,8 @@ namespace Craft;
 
 class ExifVariable
 {
-  public function exampleVariable($optional = null)
+  public function checkArrayVariable($array)
   {
-    return "And away we go to the Twig template...";
+    return is_array($array);
   }
 }

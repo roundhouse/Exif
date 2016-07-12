@@ -20,8 +20,5 @@ class ExifModel extends BaseModel
    */
   protected function defineAttributes()
   {
-    return array_merge(parent::defineAttributes(), array(
-      'exifData' => array(AttributeType::Mixed),
-    ));
   }
 }

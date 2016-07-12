@@ -14,10 +14,11 @@
 
 {% import "_includes/forms" as forms %}
 
-<p>Camera Make: <span>{{ values['ifd0.Make'] is defined ? values['ifd0.Make'] }}</span></p>
-<p>Camera Model: <span>{{ values['ifd0.Model'] is defined ? values['ifd0.Model'] }}</span></p>
-<p>ISO: <span>{{ values['exif.ISOSpeedRatings'] is defined ? values['exif.ISOSpeedRatings'] }}</span></p>
-<p>Focal Length: <span>{{ values['exif.FocalLength'] is defined ? values['exif.FocalLength'] ~ ' mm' }}</span></p>
-<p>Aperture: <span>{{ values['exif.FNumber'] is defined ? 'f/' ~ values['exif.FNumber'] }}</span></p>
-<p>Shutter Speed: <span>{{ values['exif.ExposureTime'] is defined ? values['exif.ExposureTime'] }}</span></p>
-<p>Date Taken: <span>{{ values['exif.DateTimeOriginal'] |date('m.d.Y') }}</span></p>
+{% set valuesExist = craft.exif.checkArrayVariable(values) %}
+
+
+{% if valuesExist %}
+  <p>EXIF Information is saved. <a href="https://github.com/roundhouse/Exif" target="_blank">Visit Documentation for usage.</a></p>
+{% else %}
+  <input class="btn submit" type="submit" value="Update EXIF Information">
+{% endif %}
