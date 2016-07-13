@@ -82,7 +82,7 @@ ___
     <img src="{{ asset.getUrl() }}" width="450">
     
     <div class="exif">
-      <h1>EXIF Information</h1>
+      <h1>IFD0 Information</h1>
       <div class="block">
         <p>{{ asset.photoExif['cameraMake'] is defined ? asset.photoExif['cameraMake'] : 'n/a' }}</p>
         <p>{{ asset.photoExif['cameraModel'] is defined ? asset.photoExif['cameraModel'] : 'n/a' }}</p>
@@ -92,7 +92,7 @@ ___
     </div>
     
     <div class="ifdo">
-      <h1>IFD0 Information</h1>
+      <h1>EXIF Information</h1>
       <div class="block">
         <p>{{ asset.photoExif['shutterSpeed'] is defined ? 'Shutter Speed: ' ~ asset.photoExif['shutterSpeed'] : 'n/a' }}</p>
         <p>{{ asset.photoExif['aperture'] is defined ? 'Aperture: f/' ~ asset.photoExif['aperture'] : 'n/a' }}</p>
