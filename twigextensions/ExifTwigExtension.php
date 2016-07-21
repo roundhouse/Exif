@@ -1,6 +1,9 @@
 <?php
 namespace Craft;
 
+// Credit to carlcs!
+// https://github.com/carlcs/craft-assetmetadata/blob/master/twigextensions/AssetMetadataTwigExtension.php
+
 use Twig_Extension;
 use Twig_Filter_Method;
 

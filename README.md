@@ -120,4 +120,8 @@ ___
 
 * Initial release
 
-Brought to you by [Vadim Goncharov](http://photocollections.io)
+### 1.0.2 -- 2016.07.21
+
+* [Fixed] Only JPG and TIFF files should now work with exif plugin
+* [Fixed] Sometimes assets were breaking because ExifModel was missing
+* [Added] added new version

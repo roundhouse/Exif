@@ -32,6 +32,7 @@ class ExifFieldType extends BaseFieldType
 
     $id = craft()->templates->formatInputId($name);
     $namespacedId = craft()->templates->namespaceInputId($id);
+    $settings = craft()->plugins->getPlugin('exif')->getSettings();
 
     craft()->templates->includeCssResource('exif/css/fields/ExifFieldType.css');
 
@@ -39,7 +40,8 @@ class ExifFieldType extends BaseFieldType
       'id' => $id,
       'name' => $name,
       'namespaceId' => $namespacedId,
-      'values' => $value
+      'values' => $value,
+      'settings' => $settings
     );
 
     return craft()->templates->render('exif/fields/ExifFieldType.twig', $variables);
@@ -47,14 +49,14 @@ class ExifFieldType extends BaseFieldType
 
   public function onAfterSave()
   {
-    $handle = $this->model->handle;
-    $myPlugin = craft()->plugins->getPlugin('exif');
+    // $handle = $this->model->handle;
+    // $myPlugin = craft()->plugins->getPlugin('exif');
 
-    $settings = [
-      'exifField' => $handle
-    ];
+    // $settings = [
+    //   'exifField' => $handle
+    // ];
 
-    craft()->plugins->savePluginSettings($myPlugin, $settings);
+    // craft()->plugins->savePluginSettings($myPlugin, $settings);
   }
 
 }

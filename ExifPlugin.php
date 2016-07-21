@@ -28,32 +28,34 @@ class ExifPlugin extends BasePlugin
       $settings = craft()->plugins->getPlugin('exif')->getSettings();
 
       if ($elementType == 'Asset') {
-        if (!$element[$settings->exifField]) {
-          $exifData = craft()->images->getExifData($element->getUrl());
-          // IFD0
-          $exifData['cameraMake'] = $exifData['ifd0.Make'];
-          $exifData['cameraModel'] = $exifData['ifd0.Model'];
-          $exifData['editSoftware'] = $exifData['ifd0.Software'];
-          $exifData['editDate'] = $exifData['ifd0.DateTime'];
+        if ($element->getExtension() == 'jpg' || $element->getExtension() == 'tiff' ) {
+          if (!$element[$settings->exifField]) {
+            $exifData = craft()->images->getExifData($element->getUrl());
+            // IFD0
+            $exifData['cameraMake'] = $exifData['ifd0.Make'];
+            $exifData['cameraModel'] = $exifData['ifd0.Model'];
+            $exifData['editSoftware'] = $exifData['ifd0.Software'];
+            $exifData['editDate'] = $exifData['ifd0.DateTime'];
 
-          // EXIF
-          $exifData['shutterSpeed'] = $exifData['exif.ExposureTime'];
-          $exifData['aperture'] = $exifData['exif.FNumber'];
-          $exifData['iso'] = $exifData['exif.ISOSpeedRatings'];
-          $exifData['focalLength'] = $exifData['exif.FocalLength'];
-          $exifData['dateTaken'] = $exifData['exif.DateTimeOriginal'];
-          $exifData['meteringMode'] = $exifData['exif.MeteringMode'];
-          $exifData['lightSource'] = $exifData['exif.LightSource'];
-          $exifData['flash'] = $exifData['exif.Flash'];
-          $exifData['exposureMode'] = $exifData['exif.ExposureMode'];
-          $exifData['whiteBalance'] = $exifData['exif.WhiteBalance'];
-          $exifData['digitalZoomRatio'] = $exifData['exif.DigitalZoomRatio'];
-          $exifData['sceneCaptureType'] = $exifData['exif.SceneCaptureType'];
-          $exifData['contrast'] = $exifData['exif.Contrast'];
-          $exifData['saturation'] = $exifData['exif.Saturation'];
-          $exifData['sharpness'] = $exifData['exif.Sharpness'];
-          $exifData['subjectDistanceRange'] = $exifData['exif.SubjectDistanceRange'];
-          $element->getContent()->setAttribute($settings->exifField, $exifData);
+            // EXIF
+            $exifData['shutterSpeed'] = $exifData['exif.ExposureTime'];
+            $exifData['aperture'] = $exifData['exif.FNumber'];
+            $exifData['iso'] = $exifData['exif.ISOSpeedRatings'];
+            $exifData['focalLength'] = $exifData['exif.FocalLength'];
+            $exifData['dateTaken'] = $exifData['exif.DateTimeOriginal'];
+            $exifData['meteringMode'] = $exifData['exif.MeteringMode'];
+            $exifData['lightSource'] = $exifData['exif.LightSource'];
+            $exifData['flash'] = $exifData['exif.Flash'];
+            $exifData['exposureMode'] = $exifData['exif.ExposureMode'];
+            $exifData['whiteBalance'] = $exifData['exif.WhiteBalance'];
+            $exifData['digitalZoomRatio'] = $exifData['exif.DigitalZoomRatio'];
+            $exifData['sceneCaptureType'] = $exifData['exif.SceneCaptureType'];
+            $exifData['contrast'] = $exifData['exif.Contrast'];
+            $exifData['saturation'] = $exifData['exif.Saturation'];
+            $exifData['sharpness'] = $exifData['exif.Sharpness'];
+            $exifData['subjectDistanceRange'] = $exifData['exif.SubjectDistanceRange'];
+            $element->getContent()->setAttribute($settings->exifField, $exifData);
+          }
         }
       }
     });
@@ -82,12 +84,12 @@ class ExifPlugin extends BasePlugin
 
   public function getVersion()
   {
-    return '0.0.1';
+    return '1.0.2';
   }
 
   public function getSchemaVersion()
   {
-    return '0.0.1';
+    return '1.0.1';
   }
 
   public function getDeveloper()
@@ -112,10 +114,10 @@ class ExifPlugin extends BasePlugin
     );
   }
 
-  public function addTwigExtension()
-  {
-    Craft::import('plugins.exif.twigextensions.ExifTwigExtension');
-    return new ExifTwigExtension();
-  }
+  // public function addTwigExtension()
+  // {
+  //   Craft::import('plugins.exif.twigextensions.ExifTwigExtension');
+  //   return new ExifTwigExtension();
+  // }
 
 }

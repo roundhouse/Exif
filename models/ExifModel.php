@@ -20,5 +20,8 @@ class ExifModel extends BaseModel
    */
   protected function defineAttributes()
   {
+    return array(
+      'exifField' => AttributeType::String
+    );
   }
 }
